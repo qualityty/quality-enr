@@ -1,0 +1,28 @@
+<% title "Companies" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @companies.name %>
+</p>
+<p>
+  <strong>Postal Code:</strong>
+  <%= @companies.postal_code %>
+</p>
+<p>
+  <strong>Serial Num:</strong>
+  <%= @companies.serial_num %>
+</p>
+<p>
+  <strong>Address:</strong>
+  <%= @companies.address %>
+</p>
+<p>
+  <strong>Telephone:</strong>
+  <%= @companies.telephone %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_company_path(@companies) %> |
+  <%= link_to "Destroy", @companies, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", companies_path %>
+</p>

@@ -1,0 +1,13 @@
+one:
+  name: MyString
+  postal_code: MyString
+  serial_num: 1
+  address: MyString
+  telephone: MyString
+
+two:
+  name: MyString
+  postal_code: MyString
+  serial_num: 1
+  address: MyString
+  telephone: MyString

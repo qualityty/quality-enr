@@ -1,0 +1,25 @@
+<% title "Companies" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Postal Code</th>
+    <th>Serial Num</th>
+    <th>Address</th>
+    <th>Telephone</th>
+  </tr>
+  <% for companies in @companies %>
+    <tr>
+      <td><%= companies.name %></td>
+      <td><%= companies.postal_code %></td>
+      <td><%= companies.serial_num %></td>
+      <td><%= companies.address %></td>
+      <td><%= companies.telephone %></td>
+      <td><%= link_to "Show", companies %></td>
+      <td><%= link_to "Edit", edit_company_path(companies) %></td>
+      <td><%= link_to "Destroy", companies, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Companies", new_company_path %></p>

@@ -1,0 +1,13 @@
+vvv 0
+mode 2
+file /media/OS/Sites/quality-enr/public/images/db/img_7039_adresse.png
+ofile out01.txt
+spacewidth 0
+graylevel 160
+dustsize 20
+imgviewer xli -geometry 400x400 
+autos 1
+autod 1
+autol 1
+gocrpath gocr
+gocraddopt -e - -f UTF8
