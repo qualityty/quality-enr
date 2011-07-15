@@ -10,7 +10,7 @@ task :update_database => :environment do
   IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (17000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  codes_postaux = (18000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
@@ -75,7 +75,7 @@ puts code_postal
     selenium.mouse_down "rec9_tb"
     selenium.type_keys 'rec9_tb', code_postal
     selenium.set_speed 1000
-    selenium.click "autocomplete_li_rec9_tb_0"
+#    selenium.click "autocomplete_li_rec9_tb_0"
     selenium.fire_event "css=div.bouton_lancer", "click"
     selenium.wait_for_page_to_load
     selenium.fire_event "//div[@id='list']/table/tbody/tr[2]", "click"

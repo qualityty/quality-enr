@@ -1,6 +1,6 @@
 class Companies < ActiveRecord::Base
   attr_accessible :name, :postal_code, :serial_num, :address, :telephone
-  validates_presence_of :name, :postal_code, :serial_num, :address, :telephone
+  validates_presence_of :name, :postal_code, :serial_num, :address
 
 
   def images_url img="adresse"
