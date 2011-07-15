@@ -9,6 +9,7 @@ gem 'selenium-client'
 gem 'nokogiri'
 #gem 'devil'
 gem "will_paginate", :git => "https://github.com/p7r/will_paginate.git", :branch => "rails3"
+gem "mysql2"
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
