@@ -10,7 +10,7 @@ task :update_database => :environment do
   IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (18000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  codes_postaux = (19000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
