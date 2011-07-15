@@ -7,7 +7,8 @@ gem 'selenium'
 gem 'rubyzip'
 gem 'selenium-client'
 gem 'nokogiri'
-
+gem 'devil'
+gem "will_paginate", :git => "https://github.com/p7r/will_paginate.git", :branch => "rails3"
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'

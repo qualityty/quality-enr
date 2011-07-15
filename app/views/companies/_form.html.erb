@@ -16,9 +16,11 @@
     <%= f.label :address %><br />
     <%= f.text_field :address %>
   </p>
+  <p><%= image_tag @companies.image("adresse") %></p>
   <p>
     <%= f.label :telephone %><br />
     <%= f.text_field :telephone %>
   </p>
+  <p><%= image_tag @companies.image("tel") %></p>
   <p><%= f.submit %></p>
 <% end %>

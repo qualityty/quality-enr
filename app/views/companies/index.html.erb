@@ -1,25 +1,31 @@
-<% title "Companies" %>
+<% title "QENR Database" %>
 
+<%= will_paginate @companies %>
+<br/>
 <table>
   <tr>
     <th>Name</th>
     <th>Postal Code</th>
-    <th>Serial Num</th>
+    <!--<th>Serial Num</th>-->
     <th>Address</th>
+    <th>Address img</th>
+    <th>Tel img</th>
     <th>Telephone</th>
   </tr>
   <% for companies in @companies %>
     <tr>
-      <td><%= companies.name %></td>
-      <td><%= companies.postal_code %></td>
-      <td><%= companies.serial_num %></td>
+      <td><%= link_to companies.name, edit_company_path(companies) %></td>
+      <!--<td><%#= raw companies.postal_code.gsub(" Web : ","<br />") %></td>-->
+      <td><%= companies.postal_code[0..5] %></td>
+      <!--<td><%= companies.serial_num %></td>-->
       <td><%= companies.address %></td>
-      <td><%= companies.telephone %></td>
-      <td><%= link_to "Show", companies %></td>
-      <td><%= link_to "Edit", edit_company_path(companies) %></td>
-      <td><%= link_to "Destroy", companies, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= image_tag "#{companies.image_dir_path + companies.image_name("adresse")}", :class => "img_tel" %></td>
+      <td><%= image_tag "#{companies.image_dir_path + companies.image_name("tel")}", :class => "img_tel" %></td>
+      <td class="td_tel"><%= companies.telephone %></td>
+      <!--<td><%= link_to "Edit", edit_company_path(companies) %></td>
+      <td><%= link_to "Destroy", companies, :confirm => 'Are you sure?', :method => :delete %></td>-->
     </tr>
   <% end %>
 </table>
-
+<%= will_paginate @companies %>
 <p><%= link_to "New Companies", new_company_path %></p>

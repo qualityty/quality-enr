@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/p7r/will_paginate.git
+  revision: 53d1da6da003dc172ee054e4cc416d0723f00b88
+  branch: rails3
+  specs:
+    will_paginate (3.0.pre3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -39,6 +46,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.1)
+    devil (0.1.9.5)
     erubis (2.7.0)
     execjs (1.2.0)
       multi_json (~> 1.0)
@@ -123,6 +131,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-script
+  devil
   hpricot
   jquery-rails
   mechanize
@@ -137,3 +146,4 @@ DEPENDENCIES
   sqlite3
   turn
   uglifier
+  will_paginate!

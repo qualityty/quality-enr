@@ -7,10 +7,10 @@ task :update_database => :environment do
   url = "http://www.qualit-enr.org"
   annuaire = "/annuaire/index.html" 
 #  codes_postaux = ['69000']
-  IMG_DIR = "images"
+  IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (12000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  codes_postaux = (17000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
@@ -85,7 +85,6 @@ puts code_postal
     keep_crawling, last_one = true, false
 
     while keep_crawling do
-#    while selenium.is_text_present "Entreprise suivante"
 
       @company = parse_company_page selenium.get_html_source, url
       if Companies.find_by_serial_num(@company.serial_num)
@@ -93,10 +92,11 @@ puts code_postal
       else
         puts "Name:        " + @company.name
         {'adresse'=>'address', 'tel'=>'telephone'}.each do |key, value|
+          image = image_absolute_path(@company.name, @company.serial_num, key)
           create_image_dir image_dir_path_absolute(@company.name, @company.serial_num)
-          download( url + images_url(key, @company.serial_num), 
-                    image_absolute_path(@company.name, @company.serial_num, key)
-                  )
+          download( url + images_url(key, @company.serial_num),
+                   image)
+
           gocr_opts = {
                         "p" => "#{GOCR_DIR}/",
                         "i" => "#{image_absolute_path(@company.name, @company.serial_num, key)}",
@@ -104,6 +104,10 @@ puts code_postal
                       }
           args = gocr_opts.map{|k,v| "-#{k} #{v}" }.join(" ")
           if key == "tel"
+            Devil.with_image(image) do |img|
+              img.crop(0, 0, 130, 14)
+              img.save(image)
+            end
             @company[value.to_sym] = `gocr #{args}`.gsub("I","1").gsub("O", "0")[4..-1]
           else
             @company[value.to_sym] = `gocr #{args}`.titleize
@@ -131,7 +135,7 @@ puts code_postal
 end
 
 
-task :dl_images => :environment do
+task :dl_images do
 
   require 'open-uri'
 
@@ -180,6 +184,35 @@ task :process_images do
     puts tel
   end
 end
+
+task :crop_images do
 #  GOCR_DIR = Dir.pwd + "/db/gocr"
 #  tel = `gocr -p #{GOCR_DIR}/ -i #{IMG_DIR}/img_#{code}_tel.png -m 130`
 #  tel = tel.gsub("I","1")[4..-1]
+
+  images_telephone = Dir.glob("app/assets/images/*/*").select{|x| x =~ /tel/ } 
+  pattern = /(\d+.*).png/
+  images_telephone.each do |tel_img|
+#    img_out_name = tel_img.scan(pattern).flatten.first + "_cropped.png"
+#    img_out = tel_img.sub(pattern,img_out_name)
+
+    puts "Processing #{tel_img}"
+
+    Devil.with_image(tel_img) do |img|
+      img.crop(0, 0, 130, 14)
+      img.save(tel_img)
+    end
+  end
+end
+
+task :delete_cropped_images do
+#  GOCR_DIR = Dir.pwd + "/db/gocr"
+#  tel = `gocr -p #{GOCR_DIR}/ -i #{IMG_DIR}/img_#{code}_tel.png -m 130`
+#  tel = tel.gsub("I","1")[4..-1]
+
+  images_cropped = Dir.glob("app/assets/images/*/*").select{|x| x =~ /crop/ } 
+  pattern = /(\d+.*).png/
+  images_cropped.each do |cropped_img|
+    File.delete(cropped_img)
+  end
+end

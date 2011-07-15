@@ -73,3 +73,6 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+.img_tel {margin: 0 10px;}
+.td_tel {width: 120px;}
