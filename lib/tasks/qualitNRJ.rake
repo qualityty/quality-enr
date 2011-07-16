@@ -238,7 +238,7 @@ task :setup_ey do
   gemlock = Dir.pwd + "/Gemfile.lock"
   File.delete(gemlock)
 
-  gemfile = Dir.pwd + "/Gemfile.test"
+  gemfile = Dir.pwd + "/Gemfile"
   new_gem = File.read(gemfile).gsub(/sqlite3/, "mysql2")
   File.open(gemfile, "w") {|file| file.puts new_gem}
 
