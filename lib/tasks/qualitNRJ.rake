@@ -246,7 +246,10 @@ task :setup_ey do
   img_dir = Dir.pwd + "/app/assets/images/*"
   Dir.mkdir(out_dir)
   `cp -rf #{img_dir} #{out_dir}`
-  `cp #{Dir.pwd}/app/assets/stylesheets/style.css #{Dir.pwd}/public/assets/application.css`
-  `bundle install`
+  `cp #{Dir.pwd}/app/assets/stylesheets/styles.css #{Dir.pwd}/public/assets/application.css`
+  `rake db:fixtures:load`
+  `bundle install --no-deployment`
+  `rake db:migrate`
+  `rake db:fixtures:load`
 end
 
