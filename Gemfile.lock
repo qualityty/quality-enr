@@ -46,6 +46,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.1)
+    devil (0.1.9.5)
     erubis (2.7.0)
     execjs (1.2.0)
       multi_json (~> 1.0)
@@ -137,6 +138,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-script
+  devil
   hpricot
   jquery-rails
   mechanize

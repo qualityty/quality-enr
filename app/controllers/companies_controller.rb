@@ -1,6 +1,32 @@
 class CompaniesController < ApplicationController
   def index
-    @companies = Companies.paginate :page => params[:page], :per_page => 100
+    if params[:per_page]
+      @per_page = params[:per_page]
+    else
+      @per_page = 25
+    end
+    @companies = Companies.paginate :page => params[:page], :per_page => @per_page
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        require 'csv'
+        csv_string = CSV.generate do |csv|
+          # header row
+          csv << ["id", "name", "serial number", "address", "telephone"]
+
+          # data rows
+          Companies.all.each do |company|
+            csv << [company.id, company.name, company.serial_num, company.address, company.telephone]
+          end
+        end
+
+        # send it to the browsah
+        send_data csv_string,
+                  :type => 'text/csv; charset=iso-8859-15; header=present',
+                  :disposition => "attachment; filename=companies.csv"
+      end
+    end
   end
 
   def show
@@ -22,12 +48,13 @@ class CompaniesController < ApplicationController
 
   def edit
     @companies = Companies.find(params[:id])
+    session[:prev_page] = request.referer 
   end
 
   def update
     @companies = Companies.find(params[:id])
     if @companies.update_attributes(params[:companies])
-      redirect_to @companies, :notice  => "Successfully updated companies."
+      redirect_to session[:prev_page], :notice => "Successfully updated #{@companies.name}."
     else
       render :action => 'edit'
     end

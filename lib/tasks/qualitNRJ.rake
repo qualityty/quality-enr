@@ -6,11 +6,10 @@ task :update_database => :environment do
 
   url = "http://www.qualit-enr.org"
   annuaire = "/annuaire/index.html" 
-#  codes_postaux = ['69000']
   IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (20000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  codes_postaux = (21000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
@@ -62,7 +61,7 @@ task :update_database => :environment do
     company
   end
 
-  selenium = Selenium::Client::Driver.new("localhost", 4444, "*firefox", "#{url}#{annuaire}", 30)
+  selenium = Selenium::Client::Driver.new("localhost", 4444, "*chrome", "#{url}#{annuaire}", 30)
   selenium.start
 
   codes_postaux.each do |code_postal|
@@ -216,3 +215,36 @@ task :delete_cropped_images do
     File.delete(cropped_img)
   end
 end
+desc 'Create YAML test fixtures from data in an existing database.
+Defaults to development database. Set RAILS_ENV to override.'
+
+task :extract_fixtures => :environment do
+  sql = "SELECT * FROM %s"
+  skip_tables = ["schema_info"]
+  ActiveRecord::Base.establish_connection
+  (ActiveRecord::Base.connection.tables - skip_tables).each do |table_name|
+    i = "000"
+    File.open("#{Dir.pwd}/test/fixtures/#{table_name}.yml", 'w') do |file|
+      data = ActiveRecord::Base.connection.select_all(sql % table_name)
+      file.write data.inject({}) { |hash, record|
+      hash["#{table_name}_#{i.succ!}"] = record
+      hash
+      }.to_yaml
+    end
+  end
+end
+
+task :setup_ey do
+  gemlock = Dir.pwd + "Gemfile.lock"
+  File.delete(gemlock)
+
+  gemfile = Dir.pwd + "/Gemfile.test"
+  new_gem = File.read(gemfile).gsub(/sqlite3/, "mysql2")
+  File.open(gemfile, "w") {|file| file.puts new_gem}
+
+  out_dir = Dir.pwd + "public/assets/"
+  img_dir = Dir.pwd + "app/assets/images/*"
+  `cp -rf #{img_dir} #{out_dir}`
+  `cp app/assets/stylesheets/style.css public/assets/application.css`
+end
+

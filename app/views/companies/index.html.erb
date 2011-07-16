@@ -1,31 +1,47 @@
 <% title "QENR Database" %>
 
+<div id="search">
+  <%= form_tag companies_path, :method => 'csv' do %>
+    <p>
+      <%= select_tag(:per_page, options_for_select(%w[ 2 5 10 25 50 100 500 1000], :selected => @per_page.to_i)) %>
+      <%= submit_tag "Companies per page", :name => nil %>
+    </p>
+  <% end %>
+    <p> | </p>
+  <%= form_tag companies_path(:csv), :method => 'get' do %>
+    <p>
+      <%= submit_tag "Download CSV", :name => nil %>
+    </p>
+  <% end %>
+</div>
+
 <%= will_paginate @companies %>
+
 <br/>
+
 <table>
   <tr>
+    <th>#</th>
     <th>Name</th>
     <th>Postal Code</th>
-    <!--<th>Serial Num</th>-->
     <th>Address</th>
     <th>Address img</th>
     <th>Tel img</th>
     <th>Telephone</th>
   </tr>
+  <% count = 0 %>
   <% for companies in @companies %>
     <tr>
+      <td class="counter"><%= "#{count += 1}." %></td>
       <td><%= link_to companies.name, edit_company_path(companies) %></td>
-      <!--<td><%#= raw companies.postal_code.gsub(" Web : ","<br />") %></td>-->
       <td><%= companies.postal_code[0..5] %></td>
-      <!--<td><%= companies.serial_num %></td>-->
       <td><%= companies.address %></td>
       <td><%= image_tag "#{companies.image_dir_path + companies.image_name("adresse")}", :class => "img_tel" %></td>
       <td><%= image_tag "#{companies.image_dir_path + companies.image_name("tel")}", :class => "img_tel" %></td>
       <td class="td_tel"><%= companies.telephone %></td>
-      <!--<td><%= link_to "Edit", edit_company_path(companies) %></td>
-      <td><%= link_to "Destroy", companies, :confirm => 'Are you sure?', :method => :delete %></td>-->
     </tr>
   <% end %>
 </table>
+
+<br/>
 <%= will_paginate @companies %>
-<p><%= link_to "New Companies", new_company_path %></p>

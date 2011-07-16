@@ -76,3 +76,7 @@ a {
 
 .img_tel {margin: 0 10px;}
 .td_tel {width: 120px;}
+.counter {text-align: right; padding-right:5px;}
+#search{text-align:right;display:block; padding-bottom: 2em;}
+#search form {display: inline;}
+#search p {display: inline;}

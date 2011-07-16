@@ -107,13 +107,17 @@ companies_010:
   updated_at: '2011-07-14 17:35:53.079933'
 companies_011:
   id: 11
-  name: SARL MCA
+  name: Sarl Mca
   postal_code: 69602 Villeurbanne Cedex
   serial_num: 39718
-  address: ! '138 Cours Emile Zola '
-  telephone: ! '04 72 45 82 68 '
+  address: ! 'I38 Cours Emile Zola
+
+'
+  telephone: ! '04 72 45 82 68
+
+'
   created_at: '2011-07-14 17:35:57.169967'
-  updated_at: '2011-07-16 11:25:49.872664'
+  updated_at: '2011-07-14 17:35:57.169967'
 companies_012:
   id: 12
   name: Bspg
@@ -163,19 +167,29 @@ companies_016:
   name: Climat Energie Sarl
   postal_code: 69300 Caluire Et Cuire
   serial_num: 41289
-  address: ! '146 rue Jean Monnet Batiment 2 '
-  telephone: ! '04 78 72 40 70 '
+  address: ! 'I46 Ruejean Monnet
+
+    Batiment 2
+
+'
+  telephone: ! '04 78 72 40 70
+
+'
   created_at: '2011-07-14 17:36:18.078973'
-  updated_at: '2011-07-16 13:06:37.237880'
+  updated_at: '2011-07-14 17:36:18.078973'
 companies_017:
   id: 17
   name: D'export Societe
   postal_code: 69200 Venissieux
   serial_num: 34983
-  address: ! '10 Rue Carnot '
-  telephone: ! '06 98 25 78 42 '
+  address: ! 'Io Rue Carnot
+
+'
+  telephone: ! '06 98 25 78 42
+
+'
   created_at: '2011-07-14 17:36:22.120869'
-  updated_at: '2011-07-16 13:06:58.946808'
+  updated_at: '2011-07-14 17:36:22.120869'
 companies_018:
   id: 18
   name: Modern Energies Solutions
@@ -251,10 +265,16 @@ companies_024:
   name: Jean Riviere
   postal_code: ! '69200 Venissieux Web : Http://Www.Jean Riviere.Fr'
   serial_num: 17969
-  address: 5 allée des Erables, Parc République
-  telephone: ! '04 72 68 82 83 '
+  address: ! '5 Allee D Es Erabl Es  Pa Rc Re Pu B Lrqu E
+
+    Pa Rc Re Pu B Lrqu E
+
+'
+  telephone: ! '04 72 68 82 83
+
+'
   created_at: '2011-07-14 17:36:50.930596'
-  updated_at: '2011-07-16 13:07:27.270301'
+  updated_at: '2011-07-14 17:36:50.930596'
 companies_025:
   id: 25
   name: Metallerie Generale Du Rhone
@@ -286,46 +306,66 @@ companies_027:
   name: Sbm Intinova Sarl
   postal_code: 69200 Venissieux
   serial_num: 36117
-  address: ! '10 Rue Des Freres Bertrand '
-  telephone: ! '04 78 70 75 92 '
+  address: ! 'Io Rue Des Freres Bertrand
+
+'
+  telephone: ! '04 78 70 75 92
+
+'
   created_at: '2011-07-14 17:37:04.726227'
-  updated_at: '2011-07-16 13:04:23.096971'
+  updated_at: '2011-07-14 17:37:04.726227'
 companies_028:
   id: 28
   name: Sarl Techniciens D Avenir
   postal_code: 69120 Vaulx En Velin
   serial_num: 39618
-  address: ! '39 avenue Georges Rouge '
-  telephone: ! '04 37 42 01 62 '
+  address: ! '39avenuegeorgesrouge
+
+'
+  telephone: ! '04 37 42 01 62
+
+'
   created_at: '2011-07-14 17:37:08.784937'
-  updated_at: '2011-07-16 13:04:41.688255'
+  updated_at: '2011-07-14 17:37:08.784937'
 companies_029:
   id: 29
   name: Hrm Kenea
   postal_code: ! '69120 Vaulx En Velin Web : Http://Www.Kenea.Fr'
   serial_num: 38666
-  address: 20-24 rue Robert Desnos
-  telephone: ! '04 37 45 39 78 '
+  address: ! '20 24 Rue Robert Desn05
+
+'
+  telephone: ! '04 37 45 39 78
+
+'
   created_at: '2011-07-14 17:37:13.090048'
-  updated_at: '2011-07-16 13:05:02.450162'
+  updated_at: '2011-07-14 17:37:13.090048'
 companies_030:
   id: 30
   name: Am Confort Energie
   postal_code: 69410 Champagne Au Mont D'or
   serial_num: 39336
-  address: ! '5 Rue Jean Elysee Dupuy '
-  telephone: ! '04 37 64 64 80 '
+  address: ! '5 Ruejeanelyseedupuy
+
+'
+  telephone: ! '04 37 64 64 80
+
+'
   created_at: '2011-07-14 17:37:17.079770'
-  updated_at: '2011-07-16 13:10:54.824370'
+  updated_at: '2011-07-14 17:37:17.079770'
 companies_031:
   id: 31
   name: Solar Industries
   postal_code: ! '69130 Ecully Web : Http://Www.Solarindustries Idf.Com'
   serial_num: 38794
-  address: ! '20 Chemin Louis Chirpaz '
-  telephone: ! '04 37 59 83 70 '
+  address: ! '20 Chemin Loui5 Chirpaz
+
+'
+  telephone: ! '04 37 59 83 70
+
+'
   created_at: '2011-07-14 17:37:21.380166'
-  updated_at: '2011-07-16 13:11:08.106602'
+  updated_at: '2011-07-14 17:37:21.380166'
 companies_032:
   id: 32
   name: Erasme
@@ -370,28 +410,36 @@ companies_035:
   name: Soleil Energie
   postal_code: ! '69140 Rillieux La Pape Web : Http://Www.Soleilenergie.Fr'
   serial_num: 31414
-  address: Centre d'affaires des Alagniers, 16 rue le Notre
+  address: ! 'C Entre D''aff Ar R Es D Es Alag Nr E Rs I6,Ruelenotre '
   telephone: ! '04 78 56 86 78 '
   created_at: '2011-07-14 17:37:38.136531'
-  updated_at: '2011-07-16 13:05:26.872203'
+  updated_at: '2011-07-15 16:03:53.718211'
 companies_036:
   id: 36
   name: Energy France Installation
   postal_code: 69530 Brignais
   serial_num: 40074
-  address: ! '313 Avenue Marcel Merieux '
-  telephone: ! '04 78 62 34 46 '
+  address: ! '3 I3 Avenue Marcelmerieux
+
+'
+  telephone: ! '04 78 62 34 46
+
+'
   created_at: '2011-07-14 17:37:42.333587'
-  updated_at: '2011-07-16 13:05:46.014089'
+  updated_at: '2011-07-14 17:37:42.333587'
 companies_037:
   id: 37
   name: Quali Install
   postal_code: 69009 Lyon
   serial_num: 39334
-  address: ! '330 Rue Du Doyen Georges Chapas '
-  telephone: ! '04 74 26 01 37 '
+  address: ! '330 E Rue Du Doyen Georges Chapas
+
+'
+  telephone: ! '04 74 26 01 37
+
+'
   created_at: '2011-07-14 17:37:46.276513'
-  updated_at: '2011-07-16 13:11:54.768356'
+  updated_at: '2011-07-14 17:37:46.276513'
 companies_038:
   id: 38
   name: Sarl In'solins
@@ -423,10 +471,14 @@ companies_040:
   name: Vectadys
   postal_code: 69960 Corbas
   serial_num: 34658
-  address: ! '44 Avenue Du 24 Aout 1944 '
-  telephone: ! '04 72 09 95 05 '
+  address: ! '44 Avenue Du 24 Aout I944
+
+'
+  telephone: ! '04 72 09 95 05
+
+'
   created_at: '2011-07-14 17:37:58.774035'
-  updated_at: '2011-07-16 13:11:35.445482'
+  updated_at: '2011-07-14 17:37:58.774035'
 companies_041:
   id: 41
   name: Au Soleil De France
@@ -553,19 +605,27 @@ companies_050:
   name: Sarl E.M.S
   postal_code: 69290 Grezieu La Varenne
   serial_num: 27556
-  address: 15 bis Chemin des Bruyeres
-  telephone: '0478448421 '
+  address: ! 'I5bischemindesbru Yeres
+
+'
+  telephone: '0478448421
+
+'
   created_at: '2011-07-14 17:38:41.298765'
-  updated_at: '2011-07-16 13:06:11.068628'
+  updated_at: '2011-07-14 17:38:41.298765'
 companies_051:
   id: 51
   name: ! 'Sadeja '
   postal_code: ! '01390 Saint Andre De Corcy Web : Http://Www.Sadeja Solaire.Com'
   serial_num: 16729
-  address: ! '30 RN de Bourg en Bresse '
-  telephone: ! '04 72 26 11 30 '
+  address: ! '30 Rn De Bourg En Bre55 E
+
+'
+  telephone: ! '047226 11 30
+
+'
   created_at: '2011-07-14 17:38:45.619032'
-  updated_at: '2011-07-16 11:38:17.179545'
+  updated_at: '2011-07-14 17:38:45.619032'
 companies_052:
   id: 52
   name: Photen
@@ -690,19 +750,31 @@ companies_061:
   name: Solutions Soleil Energie
   postal_code: ! '01000 Bourg En Bresse Web : Http://Www.Solutions Soleil.Fr'
   serial_num: 33018
-  address: ! '10 rue François Arago Cenord BP8100 '
-  telephone: ! '04 74 23 37 24 '
+  address: ! 'Io Rue François Arago
+
+    Cenord Bp8 Ioo
+
+'
+  telephone: ! '04 74 23 37 24
+
+'
   created_at: '2011-07-14 18:06:12.033295'
-  updated_at: '2011-07-16 11:33:53.380859'
+  updated_at: '2011-07-14 18:06:12.033295'
 companies_062:
   id: 62
   name: Couverture Zinguerie De L'ain
   postal_code: 01000 Saint Denis Les Bourg
   serial_num: 41142
-  address: ! '125 Allee Des Eglantines Les Hameaux De la Grange '
-  telephone: ! '04 74 24 32 91 '
+  address: ! 'I25 Allee Des Eglantines
+
+    Les Hameaux Dela Grange
+
+'
+  telephone: '0474243291
+
+'
   created_at: '2011-07-14 18:06:17.169764'
-  updated_at: '2011-07-16 11:35:16.777743'
+  updated_at: '2011-07-14 18:06:17.169764'
 companies_063:
   id: 63
   name: Ecp Christophe Pouillat
@@ -819,10 +891,14 @@ companies_071:
   postal_code: ! '01750 Saint Laurent Sur Saone Web : Http://Www.Menevaut Chauffage
     Couverture.Fr'
   serial_num: 20378
-  address: 105 rue Jules Ferry
-  telephone: ! '03 85 38 20 08 '
+  address: ! 'I05 Ruejulesferry
+
+'
+  telephone: ! '03 85 38 20 08
+
+'
   created_at: '2011-07-14 18:07:02.247178'
-  updated_at: '2011-07-16 11:38:51.726838'
+  updated_at: '2011-07-14 18:07:02.247178'
 companies_072:
   id: 72
   name: Certa
@@ -1074,19 +1150,27 @@ companies_090:
   name: Quali'services
   postal_code: 01600 Trevoux
   serial_num: 36708
-  address: 1970 Chemin d'Arras
-  telephone: ! '06 77 90 17 63 '
+  address: ! 'L97o C He Mr N D''arr As
+
+'
+  telephone: ! '06 77 90 17 63
+
+'
   created_at: '2011-07-14 18:10:31.635047'
-  updated_at: '2011-07-16 11:40:37.081666'
+  updated_at: '2011-07-14 18:10:31.635047'
 companies_091:
   id: 91
   name: Mco Sun
   postal_code: 69400 Villefranche Sur Saone
   serial_num: 31960
-  address: ! '651, Avenue De La Plage '
-  telephone: ! '09 62 32 22 75 '
+  address: ! '65 I, Avenue De La Plage
+
+'
+  telephone: ! '09 62 32 22 75
+
+'
   created_at: '2011-07-14 18:10:35.873123'
-  updated_at: '2011-07-16 11:41:30.582656'
+  updated_at: '2011-07-14 18:10:35.873123'
 companies_092:
   id: 92
   name: Habitat Et Solutions Durables
@@ -1170,10 +1254,14 @@ companies_098:
   name: Forclum Infra Sud Est
   postal_code: 69480 Amberieux
   serial_num: 37569
-  address: ZI Rue Mario et Monique PIANI
-  telephone: ! '04 74 67 26 70 '
+  address: ! 'Zr Ru E Ma Rro Et Mo Nrqu E Pr A Nr
+
+'
+  telephone: ! '04 74 67 26 70
+
+'
   created_at: '2011-07-14 18:11:13.957949'
-  updated_at: '2011-07-16 11:41:11.242739'
+  updated_at: '2011-07-14 18:11:13.957949'
 companies_099:
   id: 99
   name: Energies Renouvelables Innovation
