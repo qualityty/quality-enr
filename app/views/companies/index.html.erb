@@ -1,7 +1,7 @@
 <% title "QENR Database" %>
 
 <div id="search">
-  <%= form_tag companies_path, :method => 'csv' do %>
+  <%= form_tag companies_path, :method => 'get' do %>
     <p>
       <%= select_tag(:per_page, options_for_select(%w[ 2 5 10 25 50 100 500 1000], :selected => @per_page.to_i)) %>
       <%= submit_tag "Companies per page", :name => nil %>
