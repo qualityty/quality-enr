@@ -235,7 +235,7 @@ task :extract_fixtures => :environment do
 end
 
 task :setup_ey do
-  gemlock = Dir.pwd + "Gemfile.lock"
+  gemlock = Dir.pwd + "/Gemfile.lock"
   File.delete(gemlock)
 
   gemfile = Dir.pwd + "/Gemfile.test"
@@ -246,5 +246,6 @@ task :setup_ey do
   img_dir = Dir.pwd + "app/assets/images/*"
   `cp -rf #{img_dir} #{out_dir}`
   `cp app/assets/stylesheets/style.css public/assets/application.css`
+  `bundle install`
 end
 
