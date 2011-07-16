@@ -242,10 +242,10 @@ task :setup_ey do
   new_gem = File.read(gemfile).gsub(/sqlite3/, "mysql2")
   File.open(gemfile, "w") {|file| file.puts new_gem}
 
-  out_dir = Dir.pwd + "public/assets/"
-  img_dir = Dir.pwd + "app/assets/images/*"
+  out_dir = Dir.pwd + "/public/assets/"
+  img_dir = Dir.pwd + "/app/assets/images/*"
   `cp -rf #{img_dir} #{out_dir}`
-  `cp app/assets/stylesheets/style.css public/assets/application.css`
+  `cp #{Dir.pwd}/app/assets/stylesheets/style.css #{Dir.pwd}/public/assets/application.css`
   `bundle install`
 end
 
