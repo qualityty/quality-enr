@@ -244,6 +244,7 @@ task :setup_ey do
 
   out_dir = Dir.pwd + "/public/assets/"
   img_dir = Dir.pwd + "/app/assets/images/*"
+  Dir.mkdir(out_dir) unless File.directory?(dir)
   `cp -rf #{img_dir} #{out_dir}`
   `cp #{Dir.pwd}/app/assets/stylesheets/style.css #{Dir.pwd}/public/assets/application.css`
   `bundle install`
