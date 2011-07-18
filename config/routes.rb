@@ -1,5 +1,9 @@
 QualityEnr::Application.routes.draw do
-  resources :companies
+  resources :companies do
+    member do
+      post 'done', :action => 'done'
+    end
+  end
 
   root :to => 'companies#index'
   # The priority is based upon order of creation:

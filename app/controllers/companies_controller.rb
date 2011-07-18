@@ -5,7 +5,15 @@ class CompaniesController < ApplicationController
     else
       @per_page = 25
     end
-    @companies = Companies.paginate :page => params[:page], :per_page => @per_page
+
+    @page = params[:page] if params[:page]
+
+    if params[:done]
+      session[:done] = (params[:done] == "done" ? "done" : "todo")
+    else
+      session[:done] = nil
+    end
+    @companies = Companies.filter_companies(session[:done]).paginate :page => params[:page], :per_page => @per_page
 
     respond_to do |format|
       format.html
@@ -13,11 +21,11 @@ class CompaniesController < ApplicationController
         require 'csv'
         csv_string = CSV.generate do |csv|
           # header row
-          csv << ["id", "name", "serial number", "address", "telephone"]
+          csv << ["Id", "Name", "Serial number", "Zip code", "City", "Website", "Address", "Telephone"]
 
           # data rows
           Companies.all.each do |company|
-            csv << [company.id, company.name, company.serial_num, company.address, company.telephone]
+            csv << [company.id, company.name, company.serial_num, company.zip_code, company.city, company.web, company.address, company.telephone]
           end
         end
 
@@ -26,6 +34,16 @@ class CompaniesController < ApplicationController
                   :type => 'text/csv; charset=iso-8859-15; header=present',
                   :disposition => "attachment; filename=companies.csv"
       end
+    end
+  end
+
+  def done
+    @company = Companies.find(params[:id])
+    @company.validated = ( @company.validated ? false : true )
+    if @company.save
+      redirect_to request.referer, :notice => "#{@company.name}' status successfully updated !"
+    else
+      redirect_to companies_url, :error => "Something went wrong, unable to change #{@company.name}' status :()"
     end
   end
 

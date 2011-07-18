@@ -1,4 +1,8 @@
 # coding: utf-8
+
+# TODO: Ajouter un bouton pour valider la ligne une fois l'adresse validée
+# TODO: Ajouter un bouton pour Afficher/cacher les lignes validées
+
 task :update_database => :environment do
   require "selenium/client"
   require 'open-uri'
@@ -9,7 +13,8 @@ task :update_database => :environment do
   IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (21000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  codes_postaux = (69000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  #codes_postaux = ["32100"] 
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
@@ -31,6 +36,62 @@ task :update_database => :environment do
   end
   def image_dir_path_absolute name, serial_num
     image_dir = Dir.pwd + "/" + image_dir_path(name, serial_num)
+  end
+
+  def correct_address addr
+    group_replace = {
+      /.(ruedela)\w/i => " rue de la ",
+      /.(avenuedela)\w/i => " avenue de la ",
+      /\w(Rue)\w/i => " rue ",
+      / (Rue)[a-z]/i => "rue ",
+      /\w(Rue) /i => " rue",
+      /\w(avenue)\w/i => " avenue ",
+      / (avenue)\w/i => "avenue ",
+      /\w(avenue) /i => " avenue",
+      /\w(chemin)\w/i => " chemin ",
+      / (chemin)\w/i => "chemin ",
+      /\w(chemin) /i => " chemin",
+      /(jean)\w/i => "jean ",
+      /(henri)\w/i => "henri ",
+      /(marechal)\w/i => "marechal ",
+      /(jules)\w/i => "jules ",
+      /[a-z](i5) /i => "is",
+      /(Ioi) / => "101",
+      /(Io) / => "10",
+      /(Ii) / => "11",
+      /(I I) / => "11",
+      /(I)\d+ /i => "1",
+      /(I )\d+ /i => "1",
+      /\d*( I) /i => "1",
+      /\A(I) /i => "1",
+      /\d+( I) /i => "1",
+      /\d+( O) /i => "0",
+      /[a-z](05)[a-z]/i => "os",
+      /[a-z](50)[a-z]/i => "so",
+      /[a-z](55)[a-z]/i => "ss",
+      /[a-z](55)[ |\n]/i => "ss",
+      /[a-z](55)\z/i => "ss",
+      /[a-z](5)[a-z]/i => "s",
+      /[a-z](5)[ |\n]/i => "s",
+      /[a-z](5)\z/i => "s",
+      / (5)[a-z]/i => "s",
+      / (I)'/i => "l",
+    }
+    group_replace.each do |k,v|
+      addr[k,1] = v while addr.match(k)
+    end
+
+    substitution = {
+      /Ru\|E/i => "rue",
+      /Rue/ => "rue",
+      /u|/i => "u",
+      / E/i => "e",
+      /Ii/i => "11"
+    }
+    substitution.each do |k,v|
+      addr.gsub(k,v)
+    end
+    addr
   end
 
   def image_name item, serial_num, ext="png"
@@ -61,25 +122,42 @@ task :update_database => :environment do
     company
   end
 
-  selenium = Selenium::Client::Driver.new("localhost", 4444, "*chrome", "#{url}#{annuaire}", 30)
+  selenium = Selenium::Client::Driver.new("localhost", 4444, "*chrome", "#{url}#{annuaire}", 20)
   selenium.start
 
   codes_postaux.each do |code_postal|
-puts code_postal
-    selenium.open annuaire
-    # Fill in the form
-    selenium.click "rec4"
-    selenium.set_speed 500
-    selenium.click "rec9_tb"
-    selenium.mouse_down "rec9_tb"
-    selenium.type_keys 'rec9_tb', code_postal
-    selenium.set_speed 1000
-    selenium.click "autocomplete_li_rec9_tb_0"
-    selenium.fire_event "css=div.bouton_lancer", "click"
-    selenium.wait_for_page_to_load
+    begin
+      selenium.open annuaire
+      # Fill in the form
+      selenium.click "rec4"
+      puts "* " + code_postal
+      selenium.set_speed 500
+      selenium.click "rec9_tb"
+      selenium.type_keys 'rec9_tb', code_postal
+      selenium.set_speed 1300
+      begin
+        selenium.click "autocomplete_li_rec9_tb_0"
+      rescue Exception => ex
+        puts ex
+      end
+
+      selenium.fire_event "css=div.bouton_lancer", "click"
+      selenium.wait_for_page_to_load
+    rescue Exception => ex
+      puts ex
+      code_postal = "#{code_postal.to_i + 100}"
+      unless code_postal[-3..-1].to_i > 100
+        puts "\n- wrong postal code, retrying...\n"
+        selenium.stop
+        selenium.start
+        retry
+      else
+        selenium.stop
+      end
+    end
     selenium.fire_event "//div[@id='list']/table/tbody/tr[2]", "click"
     selenium.wait_for_page_to_load
-    selenium.set_speed 100
+    selenium.set_speed 150
 
     keep_crawling, last_one = true, false
 
@@ -87,7 +165,7 @@ puts code_postal
 
       @company = parse_company_page selenium.get_html_source, url
       if Companies.find_by_serial_num(@company.serial_num)
-        puts "Company #{@company.name} is already Registered"
+        puts "Company #{@company.name} is already Registered\n"
       else
         puts "Name:        " + @company.name
         {'adresse'=>'address', 'tel'=>'telephone'}.each do |key, value|
@@ -107,11 +185,13 @@ puts code_postal
               img.crop(0, 0, 130, 14)
               img.save(image)
             end
-            @company[value.to_sym] = `gocr #{args}`.gsub("I","1").gsub("O", "0")[4..-1]
+            @company[value.to_sym] = `gocr #{args}`.gsub("I","1").gsub("O", "0")[4..-1].strip
           else
-            @company[value.to_sym] = `gocr #{args}`.titleize
+            @company[value.to_sym] = `gocr #{args}`.titleize.strip
           end
         end
+        @company.address = correct_address(@company.address)
+
         puts "Address:     " + @company.address
         puts "Telephone:   " + @company.telephone
         puts "Serial:      " + @company.serial_num.to_s
@@ -185,18 +265,10 @@ task :process_images do
 end
 
 task :crop_images do
-#  GOCR_DIR = Dir.pwd + "/db/gocr"
-#  tel = `gocr -p #{GOCR_DIR}/ -i #{IMG_DIR}/img_#{code}_tel.png -m 130`
-#  tel = tel.gsub("I","1")[4..-1]
-
   images_telephone = Dir.glob("app/assets/images/*/*").select{|x| x =~ /tel/ } 
   pattern = /(\d+.*).png/
   images_telephone.each do |tel_img|
-#    img_out_name = tel_img.scan(pattern).flatten.first + "_cropped.png"
-#    img_out = tel_img.sub(pattern,img_out_name)
-
     puts "Processing #{tel_img}"
-
     Devil.with_image(tel_img) do |img|
       img.crop(0, 0, 130, 14)
       img.save(tel_img)
@@ -250,3 +322,85 @@ task :setup_ey do
   `bundle install --no-deployment`
 end
 
+
+task :strip_n => :environment do
+  Companies.all.each do |company|
+    puts company.telephone
+    company.telephone = company.telephone.strip
+    company.address = company.address.strip
+    company.save!
+    puts company.telephone
+  end
+end
+
+task :clean_up_addresses => :environment do
+
+  def correct_address addr
+    group_replace = {
+      /.(ruedela)\w/i => " rue de la ",
+      /.(avenuedela)\w/i => " avenue de la ",
+      /\w(Rue)\w/i => " rue ",
+      / (Rue)[a-z]/i => "rue ",
+      /\w(Rue) /i => " rue",
+      /\w(avenue)\w/i => " avenue ",
+      / (avenue)\w/i => "avenue ",
+      /\w(avenue) /i => " avenue",
+      /\w(chemin)\w/i => " chemin ",
+      / (chemin)\w/i => "chemin ",
+      /\w(chemin) /i => " chemin",
+      /(jean)\w/i => "jean ",
+      /(henri)\w/i => "henri ",
+      /(marechal)\w/i => "marechal ",
+      /(jules)\w/i => "jules ",
+      /[a-z](i5) /i => "is",
+      /(Ioi) / => "101",
+      /(Io) / => "10",
+      /(Ii) / => "11",
+      /(I I) / => "11",
+      /(I)\d+ /i => "1",
+      /(I )\d+ /i => "1",
+      /\d*( I) /i => "1",
+      /\A(I) /i => "1",
+      /\d+( I) /i => "1",
+      /\d+( O) /i => "0",
+      /[a-z](05)[a-z]/i => "os",
+      /[a-z](50)[a-z]/i => "so",
+      /[a-z](55)[a-z]/i => "ss",
+      /[a-z](55)[ |\n]/i => "ss",
+      /[a-z](55)\z/i => "ss",
+      /[a-z](5)[a-z]/i => "s",
+      /[a-z](5)[ |\n]/i => "s",
+      /[a-z](5)\z/i => "s",
+      / (5)[a-z]/i => "s",
+      / (I)'/i => "l",
+    }
+    group_replace.each do |k,v|
+      addr[k,1] = v while addr.match(k)
+    end
+
+    substitution = {
+      /Ru\|E/i => "rue",
+      /Rue/ => "rue",
+      /u|/i => "u",
+      / E/i => "e",
+      /Ii/i => "11"
+    }
+    substitution.each do |k,v|
+      addr.gsub(k,v)
+    end
+    addr
+  end
+
+  count = 0
+  Companies.all.each do |company|
+    tmp = correct_address company.address.dup
+    unless company.address == tmp
+      puts "#{count}::Old: " + company.address
+      puts "#{count}::New: " + tmp
+      puts
+      count += 1
+    end
+    company.address = correct_address company.address.dup
+    company.save!
+  end
+end

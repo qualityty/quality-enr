@@ -3,6 +3,26 @@
 <div id="search">
   <%= form_tag companies_path, :method => 'get' do %>
     <p>
+      <%= hidden_field_tag :per_page, @per_page.to_i%>
+      <%= hidden_field_tag :page, (@page.to_i == 0 ? 1 : @page.to_i) %>
+      <%= submit_tag "View All", :name => nil %>
+    </p>
+  <% end %>
+  <p> | </p>
+  <%= form_tag companies_path, :method => 'get' do %>
+    <p>
+      <% if session[:done] == "done" %>
+        <%= hidden_field_tag "done", "todo"%>
+        <%= submit_tag "View Todo", :name => nil %>
+      <% else %>
+        <%= hidden_field_tag "done", "done"%>
+        <%= submit_tag "View Done", :name => nil %>
+      <% end %>
+    </p>
+  <% end %>
+  <p> | </p>
+  <%= form_tag companies_path, :method => 'get' do %>
+    <p>
       <%= select_tag(:per_page, options_for_select(%w[ 2 5 10 25 50 100 500 1000], :selected => @per_page.to_i)) %>
       <%= submit_tag "Companies per page", :name => nil %>
     </p>
@@ -22,6 +42,7 @@
 <table>
   <tr>
     <th>#</th>
+    <th>Done?</th>
     <th>Name</th>
     <th>Postal Code</th>
     <th>Address</th>
@@ -29,16 +50,16 @@
     <th>Tel img</th>
     <th>Telephone</th>
   </tr>
-  <% count = 0 %>
-  <% for companies in @companies %>
+  <% for company in @companies %>
     <tr>
-      <td class="counter"><%= "#{count += 1}." %></td>
-      <td><%= link_to companies.name, edit_company_path(companies) %></td>
-      <td><%= companies.postal_code[0..5] %></td>
-      <td><%= companies.address %></td>
-      <td><%= image_tag "#{companies.image_dir_path + companies.image_name("adresse")}", :class => "img_tel" %></td>
-      <td><%= image_tag "#{companies.image_dir_path + companies.image_name("tel")}", :class => "img_tel" %></td>
-      <td class="td_tel"><%= companies.telephone %></td>
+      <td class="counter"><%= company.id.to_s + "." %></td>
+      <td><%= button_to company.cycle_todo_button, done_company_path(company) %></td>
+      <td><%= link_to company.name, edit_company_path(company) %></td>
+      <td><%= company.zip_code %> <%= company.city %><br /><%= company.web %></td>
+      <td><%= company.address %></td>
+      <td><%= image_tag "#{company.image_dir_path + company.image_name("adresse")}", :class => "img_tel" %></td>
+      <td><%= image_tag "#{company.image_dir_path + company.image_name("tel")}", :class => "img_tel" %></td>
+      <td class="td_tel"><%= company.telephone %></td>
     </tr>
   <% end %>
 </table>
