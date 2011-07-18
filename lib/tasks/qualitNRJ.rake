@@ -13,8 +13,8 @@ task :update_database => :environment do
   IMG_DIR = "app/assets/images"
   GOCR_DIR = Dir.pwd + "/db/gocr"
 
-  codes_postaux = (69000..97000).step(1000).map{|x| x.to_s.rjust(5, "0")}
-  #codes_postaux = ["32100"] 
+  codes_postaux = (97000..100000).step(1000).map{|x| x.to_s.rjust(5, "0")}
+  #codes_postaux = ["83110"] 
 
   def download full_url, to_here
     writeOut = open(to_here, "wb")
@@ -191,6 +191,8 @@ task :update_database => :environment do
           end
         end
         @company.address = correct_address(@company.address)
+        x = @company.telephone.dup.gsub(" ", "")
+        @company.telephone = (0..x.size-2).step(2).map{|i| x[i..i+1]}.join(" ")
 
         puts "Address:     " + @company.address
         puts "Telephone:   " + @company.telephone
@@ -401,6 +403,14 @@ task :clean_up_addresses => :environment do
       count += 1
     end
     company.address = correct_address company.address.dup
+    company.save!
+  end
+end
+
+task :normalise_tel => :environment do
+  Companies.all.each do |company|
+    x = company.telephone.dup.gsub(" ", "")
+    company.telephone = (0..x.size-2).step(2).map{|i| x[i..i+1]}.join(" ")
     company.save!
   end
 end

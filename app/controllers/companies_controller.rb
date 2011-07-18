@@ -1,20 +1,14 @@
 class CompaniesController < ApplicationController
+
   def index
-    if params[:per_page]
-      @per_page = params[:per_page]
-    else
-      @per_page = 25
-    end
-
+    @per_page = ( params[:per_page] ? params[:per_page] : @per_page = 25 )
     @page = params[:page] if params[:page]
-
     if params[:done]
       session[:done] = (params[:done] == "done" ? "done" : "todo")
     else
       session[:done] = nil
     end
     @companies = Companies.filter_companies(session[:done]).paginate :page => params[:page], :per_page => @per_page
-
     respond_to do |format|
       format.html
       format.csv do
@@ -25,10 +19,10 @@ class CompaniesController < ApplicationController
 
           # data rows
           Companies.all.each do |company|
-            csv << [company.id, company.name, company.serial_num, company.zip_code, company.city, company.web, company.address, company.telephone]
+            csv << [company.id, company.name, company.serial_num, company.zip_code, 
+              company.city, company.web, company.address, company.telephone]
           end
         end
-
         # send it to the browsah
         send_data csv_string,
                   :type => 'text/csv; charset=iso-8859-15; header=present',
