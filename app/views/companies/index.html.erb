@@ -1,4 +1,4 @@
-<% title "QENR Database" %>
+<%# title "QENR Database" %>
 
 <div id="search">
   <%= form_tag companies_path, :method => 'get' do %>
@@ -37,7 +37,6 @@
     </p>
   <% end %>
 </div>
-
 <%= will_paginate @companies %>
 
 <br/>
