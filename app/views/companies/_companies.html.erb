@@ -1,0 +1,9 @@
+<tr id="<%= companies.id %>">
+  <td class="first"><%= companies.id.to_s + "." %></td>
+  <td><%= button_to companies.cycle_todo_button, done_company_path(companies), :remote => true %></td>
+  <td><%= link_to companies.name, edit_company_path(companies) %></td>
+  <td><%= companies.address %></td>
+  <td><%= image_tag "#{companies.image_dir_path + companies.image_name("adresse")}", :class => "img_tel" %></td>
+  <td><%= image_tag "#{companies.image_dir_path + companies.image_name("tel")}", :class => "img_tel" %></td>
+  <td><%= companies.telephone %></td>
+</tr>

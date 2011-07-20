@@ -1,0 +1,39 @@
+<%= form_tag companies_path, :method => 'get', :remote => true do %>
+  <p>
+    <%= hidden_field_tag :per_page, @per_page.to_i %>
+    <%= hidden_field_tag :page, (@page.to_i == 0 ? 1 : @page.to_i) %>
+    <%= submit_tag "View All", :name => nil %>
+  </p>
+<% end %>
+<p> | </p>
+<%= form_tag companies_path, :method => 'get', :remote => true do %>
+  <p>
+    <%= hidden_field_tag "page", @page if @page %>
+    <%= hidden_field_tag "per_page", @per_page if @per_page %>
+    <%= hidden_field_tag "done", "todo"%>
+    <%= submit_tag "View Todo", :name => nil %>
+  </p>
+<% end %>
+<%= form_tag companies_path, :method => 'get', :remote => true do %>
+  <p>
+    <%= hidden_field_tag "page", @page if @page %>
+    <%= hidden_field_tag "per_page", @per_page if @per_page %>
+    <%= hidden_field_tag "done", "done"%>
+    <%= submit_tag "View Done", :name => nil %>
+  </p>
+<% end %>
+<p> | </p>
+<%= form_tag companies_path, :method => 'get', :remote => true do %>
+  <p>
+    <%= select_tag(:per_page, options_for_select(%w[ 2 5 10 25 50 100 500 1000], :selected => @per_page.to_i)) %>
+    <%= hidden_field_tag "done", "todo" if session[:done] %>
+    <%= submit_tag "Companies per page", :name => nil %>
+  </p>
+<% end %>
+  <p> | </p>
+<%= form_tag companies_path(:csv), :method => 'get' do %>
+  <p>
+    <%= submit_tag "Download CSV", :name => nil %>
+  </p>
+<% end %>
+

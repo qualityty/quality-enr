@@ -1,0 +1,16 @@
+<%= will_paginate @companies %>
+<br/>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Done?</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Address img</th>
+    <th>Tel img</th>
+    <th>Telephone</th>
+  </tr>
+  <%= render @companies %>
+</table>
+<br/>
+<%= will_paginate @companies %>

@@ -375,6 +375,8 @@ task :clean_up_addresses => :environment do
       /[a-z](5)\z/i => "s",
       / (5)[a-z]/i => "s",
       / (I)'/i => "l",
+      /(u\|)[A-Z]/ => "u",
+      /(0550)/ => "osso",
     }
     group_replace.each do |k,v|
       addr[k,1] = v while addr.match(k)
@@ -383,7 +385,6 @@ task :clean_up_addresses => :environment do
     substitution = {
       /Ru\|E/i => "rue",
       /Rue/ => "rue",
-      /u|/i => "u",
       / E/i => "e",
       /Ii/i => "11"
     }
@@ -402,8 +403,9 @@ task :clean_up_addresses => :environment do
       puts
       count += 1
     end
-    company.address = correct_address company.address.dup
-    company.save!
+    #company.address = correct_address company.address.dup
+    #company.address.capitalize!
+    #company.save!
   end
 end
 

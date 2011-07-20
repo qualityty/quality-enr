@@ -1,0 +1,2 @@
+$("#search").html("<%= escape_javascript(render "search", :locals => { :per_page => @per_page, :page => @page }) %>");
+$("#companies").html("<%= escape_javascript(render "companies_table") %>");

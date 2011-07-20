@@ -10,6 +10,7 @@ class CompaniesController < ApplicationController
     end
     @companies = Companies.filter_companies(session[:done]).paginate :page => params[:page], :per_page => @per_page
     respond_to do |format|
+      format.js
       format.html
       format.csv do
         require 'csv'
@@ -34,10 +35,12 @@ class CompaniesController < ApplicationController
   def done
     @company = Companies.find(params[:id])
     @company.validated = ( @company.validated ? false : true )
-    if @company.save
-      redirect_to request.referer, :notice => "#{@company.name}' status successfully updated !"
-    else
-      redirect_to companies_url, :error => "Something went wrong, unable to change #{@company.name}' status :()"
+    @company.save
+    respond_to do |format|
+      format.js
+      format.html do
+        redirect_to request.referer, :notice => "#{@company.name}' status successfully updated !"
+      end
     end
   end
 
@@ -59,12 +62,12 @@ class CompaniesController < ApplicationController
   end
 
   def edit
-    @companies = Companies.find(params[:id])
+    @companies = Companies.find(params[:id], :lock => true)
     session[:prev_page] = request.referer 
   end
 
   def update
-    @companies = Companies.find(params[:id])
+    @companies = Companies.find(params[:id], :lock => true)
     if @companies.update_attributes(params[:companies])
       redirect_to session[:prev_page], :notice => "Successfully updated #{@companies.name}."
     else

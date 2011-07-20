@@ -1,70 +1,9 @@
 <%# title "QENR Database" %>
 
 <div id="search">
-  <%= form_tag companies_path, :method => 'get' do %>
-    <p>
-      <%= hidden_field_tag :per_page, @per_page.to_i%>
-      <%= hidden_field_tag :page, (@page.to_i == 0 ? 1 : @page.to_i) %>
-      <%= submit_tag "View All", :name => nil %>
-    </p>
-  <% end %>
-  <p> | </p>
-  <%= form_tag companies_path, :method => 'get' do %>
-    <p>
-      <%= hidden_field_tag "page", @page if @page %>
-      <%= hidden_field_tag "per_page", @per_page if @per_page %>
-      <% if session[:done] == "done" %>
-        <%= hidden_field_tag "done", "todo"%>
-        <%= submit_tag "View Todo", :name => nil %>
-      <% else %>
-        <%= hidden_field_tag "done", "done"%>
-        <%= submit_tag "View Done", :name => nil %>
-      <% end %>
-    </p>
-  <% end %>
-  <p> | </p>
-  <%= form_tag companies_path, :method => 'get' do %>
-    <p>
-      <%= select_tag(:per_page, options_for_select(%w[ 2 5 10 25 50 100 500 1000], :selected => @per_page.to_i)) %>
-      <%= hidden_field_tag "done", "todo" if session[:done] %>
-      <%= submit_tag "Companies per page", :name => nil %>
-    </p>
-  <% end %>
-    <p> | </p>
-  <%= form_tag companies_path(:csv), :method => 'get' do %>
-    <p>
-      <%= submit_tag "Download CSV", :name => nil %>
-    </p>
-  <% end %>
+  <%= render "search", :locals => { :per_page => @per_page, :page => @page } %>
 </div>
-<%= will_paginate @companies %>
 
-<br/>
-
-<table>
-  <tr>
-    <th>#</th>
-    <th>Done?</th>
-    <th>Name</th>
-    <!--<th>Postal Code</th>-->
-    <th>Address</th>
-    <th>Address img</th>
-    <th>Tel img</th>
-    <th>Telephone</th>
-  </tr>
-  <% for company in @companies %>
-    <tr>
-      <td class="counter"><%= company.id.to_s + "." %></td>
-      <td><%= button_to company.cycle_todo_button, done_company_path(company) %></td>
-      <td><%= link_to company.name, edit_company_path(company) %></td>
-      <!--<td><%= company.zip_code %> <%= company.city %><br /><%= company.web %></td>-->
-      <td><%= company.address %></td>
-      <td><%= image_tag "#{company.image_dir_path + company.image_name("adresse")}", :class => "img_tel" %></td>
-      <td><%= image_tag "#{company.image_dir_path + company.image_name("tel")}", :class => "img_tel" %></td>
-      <td class="td_tel"><%= company.telephone %></td>
-    </tr>
-  <% end %>
-</table>
-
-<br/>
-<%= will_paginate @companies %>
+<div id="companies">
+  <%= render "companies_table", :locals => { :companies => @companies } %>
+</div>
