@@ -13,7 +13,7 @@ gem "will_paginate", :git => "https://github.com/p7r/will_paginate.git", :branch
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'mysql2'
 
 # Asset template engines
 gem 'sass-rails', "~> 3.1.0.rc"
